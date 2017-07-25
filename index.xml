@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cloudprober</title>
+    <link>http://cloudprober.github.io/</link>
+    <description>Recent content on Cloudprober</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="http://cloudprober.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cloudprober</title>
+      <link>http://cloudprober.github.io/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://cloudprober.github.io/</guid>
+      <description>Cloudprober is a monitoring software that makes it super-easy to monitor availability and performance of various components of your system. Cloudprober employs the &amp;ldquo;active&amp;rdquo; monitoring model. It runs probes against (or on) your components to verify that they are working as expected. For example, it can run a probe to verify that your frontends can reach your backends. Similarly it can run a probe to verify that your in-Cloud VMs can actually reach your on-premise systems.</description>
+    </item>
+    
+    <item>
+      <title>Getting started</title>
+      <link>http://cloudprober.github.io/getting-started/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://cloudprober.github.io/getting-started/</guid>
+      <description>Installation Getting started with Cloudprober is as easy as running the following command:
+docker run --net host -v /tmp:/tmp cloudprober/cloudprober # Note: --net host provides better network performance and makes port forwarding # management easier.  This will start cloudprober with only the &amp;ldquo;sysvars&amp;rdquo; module (no probes). It will write metrics to the stdout in cloudprober&amp;rsquo;s line protocol format (to be documented). It will also start a Prometheus exporter that can be accessed at: http://localhost:9313</description>
+    </item>
+    
+  </channel>
+</rss>
