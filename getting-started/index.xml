@@ -17,7 +17,7 @@
       
       <guid>https://cloudprober.github.io/getting-started/</guid>
       <description>Installation Getting started with Cloudprober is as easy as running the following command:
-docker run --net host -v /tmp:/tmp cloudprober/cloudprober # Note: --net host provides better network performance and makes port forwarding # management easier.  This will start cloudprober with only the &amp;ldquo;sysvars&amp;rdquo; module (no probes). It will write metrics to the stdout in cloudprober&amp;rsquo;s line protocol format (to be documented). It will also start a Prometheus exporter that can be accessed at: http://localhost:9313</description>
+docker run --net host -v /tmp:/tmp cloudprober/cloudprober # Note: --net host provides better network performance and makes port forwarding # management easier.  This will download the latest cloudprober docker image and start it. You can also download pre-built binaries for Linux, Mac OS and Windows from the project&amp;rsquo;s releases page. Without any config, cloudprober will run only the &amp;ldquo;sysvars&amp;rdquo; module (no probes) and write metrics to stdout in cloudprober&amp;rsquo;s line protocol format (to be documented).</description>
     </item>
     
   </channel>
