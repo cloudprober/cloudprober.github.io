@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Probes on Cloudprober</title>
+    <link>https://cloudprober.github.io/probe/</link>
+    <description>Recent content in Probes on Cloudprober</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 25 Jul 2017 17:24:32 -0700</lastBuildDate>
+    
+	<atom:link href="https://cloudprober.github.io/probe/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Probe</title>
+      <link>https://cloudprober.github.io/probe/</link>
+      <pubDate>Tue, 25 Jul 2017 17:24:32 -0700</pubDate>
+      
+      <guid>https://cloudprober.github.io/probe/</guid>
+      <description>Cloudprober&amp;rsquo;s main task is to run probes. A probe executes something, usually against a set of targets, to verify that the systems are working as expected. For example, an HTTP probe executes an HTTP request against a web server to verify that the web server is available. Cloudprober probes run repeatedly at a configured interval and export probe results as a set of metrics.
+A probe is defined as a set of the following fields:</description>
+    </item>
+    
+  </channel>
+</rss>
