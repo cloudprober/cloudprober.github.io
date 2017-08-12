@@ -26,8 +26,12 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://cloudprober.github.io/getting-started/</guid>
-      <description>Installation Getting started with Cloudprober is as easy as running the following command:
-docker run --net host -v /tmp:/tmp cloudprober/cloudprober # Note: --net host provides better network performance and makes port forwarding # management easier.  This will download the latest cloudprober docker image and start it. You can also download pre-built binaries for Linux, Mac OS and Windows from the project&amp;rsquo;s releases page. Without any config, cloudprober will run only the &amp;ldquo;sysvars&amp;rdquo; module (no probes) and write metrics to stdout in cloudprober&amp;rsquo;s line protocol format (to be documented).</description>
+      <description>Installation  From Source
+If you have Go installed and GOPATH environment variable properly set up, you can download and install cloudprober using the following commands:
+go get github.com/google/cloudprober GOBIN=$GOPATH/bin go install $GOPATH/src/github.com/google/cloudprober/cmd/cloudprober.go  Pre-built Binaries
+You can download the pre-built binaries for Linux, Mac OS and Windows from the project&amp;rsquo;s releases page.
+ Docker Image
+You can download and run the latest docker image using the following command:</description>
     </item>
     
     <item>
