@@ -9,14 +9,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>Cloudprober</title>
+    <title>External Probe - Cloudprober</title>
     <meta name="generator" content="Hugo 0.36.1" />
 
     
-    <link rel="canonical" href="https://cloudprober.github.io/">
+    <link rel="canonical" href="https://cloudprober.github.io/how-to/external-probe/">
     
 
-    <meta property="og:url" content="https://cloudprober.github.io/">
+    <meta property="og:url" content="https://cloudprober.github.io/how-to/external-probe/">
     <meta property="og:title" content="Cloudprober">
     
     <meta name="apple-mobile-web-app-title" content="Cloudprober">
@@ -65,9 +65,6 @@
     <script src="https://cloudprober.github.io/javascripts/modernizr.js"></script>
 
     
-    <link href="https://cloudprober.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Cloudprober" />
-    <link href="https://cloudprober.github.io/index.xml" rel="feed" type="application/rss+xml" title="Cloudprober" />
-    
 
   </head>
   <body class=" ">
@@ -96,7 +93,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        Cloudprober
+        External Probe
       </div>
     </div>
 
@@ -171,14 +168,11 @@
 
 
 
-<a class="current" title="Overview" href="/">
+<a  title="Overview" href="/">
 	
 	Overview
 </a>
 
-
-<ul id="scrollspy">
-</ul>
 
 
   
@@ -232,11 +226,14 @@
 
 
 
-<a  title="External Probe" href="/how-to/external-probe/">
+<a class="current" title="External Probe" href="/how-to/external-probe/">
 	
 	External Probe
 </a>
 
+
+<ul id="scrollspy">
+</ul>
 
 
       
@@ -258,59 +255,116 @@
 
 	<article class="article">
 		<div class="wrapper">
-			
-				<h1>Cloudprober </h1>
-
-				
-
-<p><a href="https://travis-ci.org/google/cloudprober"><img src="https://travis-ci.org/google/cloudprober.svg?branch=master" alt="Build
-Status" /></a>
-<a href="https://ci.appveyor.com/project/manugarg/cloudprober-wwcpu"><img src="https://ci.appveyor.com/api/projects/status/ypg1okxxfedwkksk?svg=true" alt="Build status" /></a></p>
-
-<p>Cloudprober is a monitoring software that makes it super-easy to monitor
-availability and performance of various components of your system. Cloudprober
-employs the &ldquo;active&rdquo; monitoring model. It runs probes against (or on) your
-components to verify that they are working as expected. For example, it can run
-a probe to verify that your frontends can reach your backends. Similarly it can
-run a probe to verify that your in-Cloud VMs can actually reach your on-premise
-systems. This kind of monitoring makes it possible to monitor your systems&rsquo;
-interfaces regardless of the implementation and helps you quickly pin down
-what&rsquo;s broken in your system.</p>
-
-<p><img src="https://cloudprober.github.io/diagrams/cloudprober_use_case.svg" alt="Cloudprober Use
-Case" /></p>
-
-<h2 id="features">Features</h2>
-
-<ul>
-<li>Automated target discovery for Cloud targets. GCP is supported
-out-of-the-box; other Cloud providers can be added easily.</li>
-<li>Integration with <a href="https://cloud.google.com/stackdriver/">StackDriver</a>. If
-configured, Cloudprober exports probe results to StackDriver as custom
-metrics.</li>
-<li>Integration with open source monitoring stack of
-<a href="http://prometheus.io">Prometheus</a> and <a href="http://grafana.com">Grafana</a>.
-Cloudprober exports probe results as counter based metrics that work well
-with Prometheus and Grafana.</li>
-<li>Built-in implementations for the most common probe types: PING, HTTP, UDP,
-DNS.<br /></li>
-<li>Abritrary, complex probes can be run through the external probe type. For
-example, you could write a simple script to insert and delete a row in your
-database, and execute this script through the &lsquo;EXTERNAL&rsquo; probe type.</li>
-<li>Standard metrics - <em>total</em>, <em>success</em>, <em>latency</em>. Latency can be configured     to be a distribution (histogram) metric, allowing calculations of               percentiles.</li>
-<li>Fast and efficient PING and UDP probe implementations that allows probing       thousands of hosts with minimal resources.</li>
-<li>Strong focus on ease of deployment. Cloudprober is written entirely in Go
-and compiles into a static binary. It can be easily deployed, either as a standalone binary or through docker containers. Thanks to the automated, continuous, target discovery, there is usually no need to re-deploy or re-configure cloudprober in response to the most of the
-changes.</li>
-<li>Low footprint. Cloudprober docker image is small, containing just the
-statically compiled binary and it takes very little CPU and RAM to run even
-a large number of probes.</li>
-<li>Extensible architecture. Cloudprober can be easily extended along most of
-the dimensions. Adding support for other Cloud targets, monitoring systems
-and even a new probe type, is straight-forward and fairly easy.</li>
-</ul>
+			<h1>External Probe </h1>
 
 			
+
+<p>External probe type allows you to run arbitrary, complex probes through
+Cloudprober. An external probe runs an independent external program for actual
+probing. Cloudprober calculates probe metrics based on program&rsquo;s exit status
+and execution time. Cloudprober also allows external programs to provide
+additional metrics over stdout.</p>
+
+<h2 id="sample-probe">Sample Probe</h2>
+
+<p>To understand how it works, lets create a sample probe that sets and gets a key
+in a redis server. Here is the <code>main</code> function of such probe:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">client</span> <span style="color:#a6e22e">redis</span>.<span style="color:#a6e22e">Client</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">key</span> = <span style="color:#e6db74">&#34;hello&#34;</span>
+	<span style="color:#a6e22e">startTime</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+	<span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Set</span>(<span style="color:#a6e22e">key</span>, []byte(<span style="color:#e6db74">&#34;world&#34;</span>))
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;set_latency_ms %f\n&#34;</span>, float64(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Since</span>(<span style="color:#a6e22e">startTime</span>).<span style="color:#a6e22e">Nanoseconds</span>())<span style="color:#f92672">/</span><span style="color:#ae81ff">1e6</span>)
+
+	<span style="color:#a6e22e">startTime</span> = <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+	<span style="color:#a6e22e">val</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;hello&#34;</span>)
+	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%s=%s&#34;</span>, <span style="color:#a6e22e">key</span>, string(<span style="color:#a6e22e">val</span>))
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;get_latency_ms %f\n&#34;</span>, float64(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Since</span>(<span style="color:#a6e22e">startTime</span>).<span style="color:#a6e22e">Nanoseconds</span>())<span style="color:#f92672">/</span><span style="color:#ae81ff">1e6</span>)
+}</code></pre></div>
+
+<p>(Full listing available at: <a href="https://github.com/google/cloudprober/blob/master/examples/external/redis_probe.go">https://github.com/google/cloudprober/blob/master/examples/external/redis_probe.go</a>)</p>
+
+<p>This program sets and gets a key in redis and prints the time taken for both operations. Cloudprober can use this program as an external probe, to verify
+the availability and performance of the redis server. This program assumes that
+redis server is running locally, at its default port. For the sake of demonstration, lets run a local redis server (you can also easily modify this program to use a different server.)</p>
+
+<pre><code>$ brew install redis
+</code></pre>
+
+<p>Let&rsquo;s compile our probe program (redis_probe.go) and verify that it&rsquo;s working
+as expected:</p>
+
+<pre><code class="language-shell">$ go build ./redis_probe.go
+$ ./redis_probe
+set_latency_ms 22.656588
+2018/02/26 15:16:14 hello=world
+get_latency_ms 2.173560
+</code></pre>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Here is the external probe configuration that makes use of this program:</p>
+
+<p>(Full listing: <a href="https://github.com/google/cloudprober/blob/master/examples/external/cloudprober.cfg">https://github.com/google/cloudprober/blob/master/examples/external/cloudprober.cfg</a>)</p>
+
+<pre><code># Run an external probe that executes a command from the current working
+# directory.
+probe {
+  name: &quot;redis_probe&quot;
+  type: EXTERNAL
+  targets { dummy_targets {} }
+  external_probe {
+    mode: ONCE
+    command: &quot;./redis_probe&quot;
+  }
+}
+</code></pre>
+
+<p>Running it through cloudprober, you&rsquo;ll see the following output:</p>
+
+<pre><code># Launch cloudprober
+cloudprober --config_file=cloudprober.cfg
+
+cloudprober 1519..0 1519583408 labels=ptype=external,probe=redis_probe,dst= success=1 total=1 latency=12143.765
+cloudprober 1519..1 1519583408 labels=ptype=external,probe=redis_probe,dst= set_latency_ms=0.516 get_latency_ms=0.491
+cloudprober 1519..2 1519583410 labels=ptype=external,probe=redis_probe,dst= success=2 total=2 latency=30585.915
+cloudprober 1519..3 1519583410 labels=ptype=external,probe=redis_probe,dst= set_latency_ms=0.636 get_latency_ms=0.994
+cloudprober 1519..4 1519583412 labels=ptype=external,probe=redis_probe,dst= success=3 total=3 latency=42621.871
+</code></pre>
+
+<p>You can import this data in prometheus following the process outlined at:
+<a href="https://cloudprober.github.io/getting-started/#running-prometheus">Running Prometheus</a>. Before doing that, let&rsquo;s make it more interesting.</p>
+
+<h2 id="distributions">Distributions</h2>
+
+<p>How nice will it be if we could find distribution of the set, get latency. If tail latency was high, it could explain the random timeouts in your application. Fortunately, it&rsquo;s very easy to create distributions in Cloudprober. You just need to add the following section to your probe definition:</p>
+
+<p>(Full listing: <a href="https://github.com/google/cloudprober/blob/master/examples/external/cloudprober_aggregate.cfg">https://github.com/google/cloudprober/blob/master/examples/external/cloudprober_aggregate.cfg</a>)</p>
+
+<pre><code># Run an external probe and aggregate metrics in cloudprober.
+    ...
+    output_metrics_options {
+      aggregate_in_cloudprober: true
+
+      # Create distributions for get_latency_ms and set_latency_ms.
+      dist_metric {
+        key: &quot;get_latency_ms&quot;
+        value: {
+          explicit_buckets: &quot;0.1,0.2,0.4,0.6,0.8,1.0,2.0&quot;
+        }
+      }
+      dist_metric {
+        key: &quot;set_latency_ms&quot;
+        value: {
+          explicit_buckets: &quot;0.1,0.2,0.4,0.6,0.8,1.0,2.0&quot;
+        }
+      }
+    }
+</code></pre>
+
+<p>This configuration adds options to aggregate metrics in cloudprober and configures &ldquo;get_latency_ms&rdquo; and &ldquo;set_latency_ms&rdquo; as distribution metrics with explicit buckets.</p>
+
 
 			<aside class="copyright" role="note">
 				
@@ -323,32 +377,33 @@ and even a new probe type, is straight-forward and fairly easy.</li>
 			<footer class="footer">
 				
 
-
-
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
-  </div>
-
   
-  
-  <div class="next">
-      <a href="https://cloudprober.github.io/categories/" title="Categories">
+      <a href="https://cloudprober.github.io/probe/" title="Probe">
         <span class="direction">
-          Next
+          Previous
         </span>
         <div class="page">
+          <div class="button button-previous" role="button" aria-label="Previous">
+            <i class="icon icon-back"></i>
+          </div>
           <div class="stretch">
             <div class="title">
-              Categories
+              Probe
             </div>
-          </div>
-          <div class="button button-next" role="button" aria-label="Next">
-            <i class="icon icon-forward"></i>
           </div>
         </div>
       </a>
+  
+  </div>
+
+  <div class="next">
+  
   </div>
 </nav>
+
+
 
 
 

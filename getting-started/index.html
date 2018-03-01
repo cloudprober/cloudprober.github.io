@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
     <title>Getting started - Cloudprober</title>
-    <meta name="generator" content="Hugo 0.25.1" />
+    <meta name="generator" content="Hugo 0.36.1" />
 
     
     <link rel="canonical" href="https://cloudprober.github.io/getting-started/">
@@ -218,6 +218,30 @@
 </li>
 
 
+
+<li>
+  
+    <span class="section">How-Tos</span>
+    <ul>
+      
+        
+        
+
+
+
+<a  title="External Probe" href="/how-to/external-probe/">
+	
+	External Probe
+</a>
+
+
+
+      
+    </ul>
+  
+</li>
+
+
         </ul>
         
 
@@ -286,13 +310,12 @@ EOF
 
 <p>This config adds an HTTP probe that accesses the homepage of the target
 &ldquo;www.google.com&rdquo; every 5s with a timout of 1s. Cloudprober configuration is
-specified in the textual protobuf format, with config schema described by the
+specified in the text protobuf format, with config schema described by the
 proto file: <a href="https://github.com/google/cloudprober/blob/master/config/config.proto">config.proto
 </a>.</p>
 
 <p>Assuming that you saved this file at /tmp/cloudprober.cfg (following the
-command above), you can have cloudprober use this config file using following
-command line:</p>
+command above), you can have cloudprober use this config file using the following command line:</p>
 
 <pre><code class="language-shell">./cloudprober --config_file /tmp/cloudprober.cfg
 </code></pre>
@@ -386,22 +409,6 @@ Grafana dashboards from Cloudprober&rsquo;s probe results.</p>
 
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
-  
-      <a href="https://cloudprober.github.io/" title="Cloudprober">
-        <span class="direction">
-          Previous
-        </span>
-        <div class="page">
-          <div class="button button-previous" role="button" aria-label="Previous">
-            <i class="icon icon-back"></i>
-          </div>
-          <div class="stretch">
-            <div class="title">
-              Cloudprober
-            </div>
-          </div>
-        </div>
-      </a>
   
   </div>
 
