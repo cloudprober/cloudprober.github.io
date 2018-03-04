@@ -17,8 +17,8 @@
       <pubDate>Sun, 08 Oct 2017 17:24:32 -0700</pubDate>
       
       <guid>https://cloudprober.github.io/how-to/external-probe/</guid>
-      <description>External probe type allows you to run arbitrary, complex probes through Cloudprober. An external probe runs an independent external program for actual probing. Cloudprober calculates probe metrics based on program&amp;rsquo;s exit status and execution time. Cloudprober also allows external programs to provide additional metrics over stdout.
-Sample Probe To understand how it works, lets create a sample probe that sets and gets a key in a redis server. Here is the main function of such probe:</description>
+      <description>External probe type allows you to run arbitrary, complex probes through Cloudprober. An external probe runs an independent external program for actual probing. Cloudprober calculates probe metrics based on program&amp;rsquo;s exit status and time elapsed in execution. Cloudprober also allows external programs to provide additional metrics over stdout.
+Sample Probe To understand how it works, lets create a sample probe that sets and gets a key in a redis server.</description>
     </item>
     
   </channel>

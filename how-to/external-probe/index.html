@@ -262,13 +262,12 @@
 <p>External probe type allows you to run arbitrary, complex probes through
 Cloudprober. An external probe runs an independent external program for actual
 probing. Cloudprober calculates probe metrics based on program&rsquo;s exit status
-and execution time. Cloudprober also allows external programs to provide
-additional metrics over stdout.</p>
+and time elapsed in execution. Cloudprober also allows external programs to provide additional metrics over stdout.</p>
 
 <h2 id="sample-probe">Sample Probe</h2>
 
 <p>To understand how it works, lets create a sample probe that sets and gets a key
-in a redis server. Here is the <code>main</code> function of such probe:</p>
+in a redis server. Here is the <code>main</code> function of such a probe:</p>
 
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><code class="language-go" data-lang="go"><span></span><span style="color: #008000; font-weight: bold">func</span> main() {
 	<span style="color: #008000; font-weight: bold">var</span> client redis.Client
@@ -379,8 +378,9 @@ for these metrics. We can import this data in stackdriver or prometheus and get 
 probe cycle. This can get expensive if probe frequency is high and the process is big (e.g. a Java binary). Also, what if you want to keep some state across probes, for example, lets say you want to monitor performance over HTTP/2 where you keep using the same TCP connection for multiple HTTP requests. A new process
 everytime makes keeping state impossible.</p>
 
-<p>External probe&rsquo;s server mode provides a way to run the external probe process in daemon mode. Cloudprober communicates with this process over stdout/stdin (connected with OS pipes), using serialized protobuf messages. Cloudprober comes with a serverutils package that makes it easy to build external probe servers
-in Go.</p>
+<p>External probe&rsquo;s server mode provides a way to run the external probe process in daemon mode. Cloudprober communicates with this process over stdout/stdin (connected with OS pipes), using serialized protobuf messages. Cloudprober comes with a serverutils package that makes it easy to build external probe servers in Go.</p>
+
+<p><img src="/diagrams/external_probe_server.svg" alt="External Probe Server" /></p>
 
 <p>Please see the code at
 <a href="https://github.com/google/cloudprober/blob/master/examples/external/redis_probe.go">examples/external/redis_probe.go</a> for server mode implementation of the above probe. Here is the corresponding
