@@ -370,7 +370,10 @@ cloudprober 1519..4 1519583412 labels=ptype=external,probe=redis_probe,dst= succ
 
 
 <p>This configuration adds options to aggregate the metrics in the cloudprober and configures &ldquo;get_latency_ms&rdquo; and &ldquo;set_latency_ms&rdquo; as distribution metrics with explicit buckets. Cloudprober will now build cumulative distributions using
-for these metrics. We can import this data in stackdriver or prometheus and get percentiles of the &ldquo;get&rdquo; and &ldquo;set&rdquo; latencies.</p>
+for these metrics. We can import this data in Stackdriver or Prometheus and get the percentiles of the &ldquo;get&rdquo; and &ldquo;set&rdquo; latencies. Following screenshot shows the
+grafana dashboard built using these metrics.</p>
+
+<p><a href="/diagrams/redis_probe_screenshot.png"><img style="float: center;" width=300px src="/diagrams/redis_probe_screenshot.png"></a></p>
 
 <h2 id="server-mode">Server Mode</h2>
 
