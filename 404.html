@@ -14,9 +14,10 @@
  newPath = 'httpd://cloudprober.org' + window.location.pathname; 
  window.onload = function() {
     const node = document.getElementById('redirect-path');
-    node.innerHTML = document.location.toString();
+    node.innerHTML = '<a href="' + newPath + '">' + newPath + '</a>';
+    window.location.href = newPath;
  }
- window.location.href = newPath;
+ 
 </script>
 </body>
 </html>
