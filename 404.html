@@ -6,18 +6,15 @@
 
 <h1>404 Handler</h1>
 
-<dl>
-  Redirecting to <dd id="redirect-path">Loading&hellip;</dd>
-</dl>
+Cloudprober website has moved to <a href="https://cloudprober.org">
+  https://cloudprober.org</a>. Please update your bookmarks.
+
+Redirecting you shortly to the new address.
 
 <script>
- newPath = 'https://cloudprober.org' + window.location.pathname; 
  window.onload = function() {
-    const node = document.getElementById('redirect-path');
-    node.innerHTML = '<a href="' + newPath + '">' + newPath + '</a>';
-    window.location.href = newPath;
+    window.location.href = 'https://cloudprober.org' + window.location.pathname;
  }
- 
 </script>
 </body>
 </html>
